@@ -6,7 +6,7 @@
 #define XVM_LIBVMINSTR
 
 enum XVM_INSTRUCTION {
-  VM_INSTRUCTION_NULL,   /* Null instruction, used as separator to stop argument skipping */
+  XVM_INSTRUCTION_NULL,   /* Null instruction, used as separator to stop argument skipping */
   XVM_INSTRUCTION_HALT,   /* Halt instruction, quit current program and reset program counter to 0 */
   XVM_INSTRUCTION_LOAD,   /* Load instruction, load something into a register */
   XVM_INSTRUCTION_MOVE,   /* Move instruction, move something from a register to another position in that register */

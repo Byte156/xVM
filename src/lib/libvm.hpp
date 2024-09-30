@@ -37,10 +37,11 @@ class VM {
       while (pc < size_mem) {
         ins = memory[pc];
         switch (ins) {
-          case VM_INSTRUCTION_NULL:
+          case XVM_INSTRUCTION_NULL:
             break;
-          case  XVM_INSTRUCTION_HALT:
+          case XVM_INSTRUCTION_HALT:
             pc = 0;
+            std::cout << "exit";
             return;
             break;
           case XVM_INSTRUCTION_LOAD:

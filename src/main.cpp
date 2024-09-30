@@ -1,6 +1,6 @@
 #include <iostream>
 #include "lib/libvm.hpp"
-#include "lib/libxvmdata.h" 
+#include "lib/libxvmdata.h"
 #include "lib/libxvmcfg.h"
 
 int main(int argc, char *argv[]) {
