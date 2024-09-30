@@ -1,4 +1,4 @@
-all: bin/xvm.exe
+all: bin/xvm.exe bin/xvm.out
 
 bin:
 	@mkdir -p bin
