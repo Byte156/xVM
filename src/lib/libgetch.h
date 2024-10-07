@@ -1,6 +1,7 @@
 #ifndef XVM_LIBGETCH
 #define XVM_LIBGETCH
 #include <iostream>
+#ifdef __linux__
 #include <termios.h>
 #include <unistd.h>
 
@@ -20,4 +21,8 @@ char getch() {
   tcsetattr(0, TCSADRAIN, &old);
   return buf; /* Return the character read */
 }
+#else
+#include <conio.h>
+#define getch _getch
+#endif
 #endif

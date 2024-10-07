@@ -67,8 +67,7 @@ class VM {
           case XVM_INSTRUCTION_HALT:
             if (XVM_CFG_VMDEBUG_SHOWCASEINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << "HALT" << std::endl;
             running = 0;
-            pc = 0;
-            return;
+            break;
           case XVM_INSTRUCTION_LOAD:
             if (XVM_CFG_VMDEBUG_SHOWCASEINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << "LOAD" << std::endl;
             switch (memory[pc + 1]) {
@@ -87,6 +86,7 @@ class VM {
             }
             break;
           case XVM_INSTRUCTION_MOVE:
+            if (XVM_CFG_VMDEBUG_SHOWCASEINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << "MOVE" << std::endl;
             switch (memory[pc + 1]) {
               case XVM_REGISTER_MEMORY:
                 /* memory[pc + 2] is what to move
@@ -104,10 +104,12 @@ class VM {
             }
             break;
           case XVM_INSTRUCTION_PRINT:
+            if (XVM_CFG_VMDEBUG_SHOWCASEINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << "PRINT" << std::endl;
             std::cout << strreg[memory[pc + 1]];
             pc++;
             break;
           case XVM_INSTRUCTION_LOADSTR:
+            if (XVM_CFG_VMDEBUG_SHOWCASEINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << "LOADSTR" << std::endl;
             len = 0; /* String lenth */
             pos = 0; /* Current position in string register */
             for (int i = 0; i < size_mem; i++) {
@@ -123,20 +125,25 @@ class VM {
             pc += len + 1;
             break;
           case XVM_INSTRUCTION_PRINTSTR:
+            if (XVM_CFG_VMDEBUG_SHOWCASEINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << "PRINTSTR" << std::endl;
             for (int i = 0; i < size_strreg; i++) {
               if (strreg[i] == 0) {break;} else {
                 std::cout << strreg[i];
               }
             }
+            pc++;
             break;
           case XVM_INSTRUCTION_GETCH:
+            if (XVM_CFG_VMDEBUG_SHOWCASEINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << "GETCH" << std::endl;
             strreg[memory[pc + 1]] = getch();
             pc++;
             break;
           case XVM_INSTRUCTION_GOTO:
+            if (XVM_CFG_VMDEBUG_SHOWCASEINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << "GOTO" << std::endl;
             pc = memory[pc + 1];
             break;
           case XVM_INSTRUCTION_IF:
+            if (XVM_CFG_VMDEBUG_SHOWCASEINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << "IF" << std::endl;
             switch (memory[pc + 1]) {
               default:
                 if (XVM_CFG_VMLOGS_SHOWERRORS) std::cout << "[xVM][Error] Runtime error at position " << pc << ": if: unknown register";

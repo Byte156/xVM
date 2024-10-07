@@ -4,7 +4,7 @@
 
 /* VM class: debug */
 #define XVM_CFG_VMDEBUG_SHOWWRITELOGS false /* Show logs while writing bootloader to memory */
-#define XVM_CFG_VMDEBUG_SHOWINSTRUCTION true /* Show instruction that's about to execute */
+#define XVM_CFG_VMDEBUG_SHOWINSTRUCTION false /* Show instruction that's about to execute */
 #define XVM_CFG_VMDEBUG_SHOWCASEINSTRUCTION true /* Show instruction that's about to execute but in switch statement */
 
 /* VM class: show error logs */
