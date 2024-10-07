@@ -135,7 +135,7 @@ class VM {
             break;
           case XVM_INSTRUCTION_GETCH:
             if (XVM_CFG_VMDEBUG_SHOWCASEINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << "GETCH" << std::endl;
-            strreg[memory[pc + 1]] = getch();
+            strreg[memory[pc + 1]] = _getch();
             pc++;
             break;
           case XVM_INSTRUCTION_GOTO:

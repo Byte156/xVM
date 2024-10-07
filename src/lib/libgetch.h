@@ -5,7 +5,7 @@
 #include <termios.h>
 #include <unistd.h>
 
-char getch() {
+char _getch() {
   char buf = 0;
   struct termios old = {0};
   /* Get current terminal settings */
@@ -23,6 +23,5 @@ char getch() {
 }
 #else
 #include <conio.h>
-#define getch _getch
 #endif
 #endif

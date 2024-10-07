@@ -18,7 +18,7 @@ enum XVM_INSTRUCTION { /* xVM instruction numbers */
   XVM_INSTRUCTION_PRINTSTR,/* Print string instruction, same as print instruction, but print multiple characters (a string) */
   XVM_INSTRUCTION_GETCH,   /* Get key instruction, read a single character from standart input and then save it in a certain location in character register */
   XVM_INSTRUCTION_GOTO,    /* Go to instruction, set program counter to next argument (memory[pc + 1]) */
-  XVM_INSTRUCTION_IF       /* If instruction, if value memory[pc + 2] in register memory[pc + 1] equals to memory[pc + 3], go to memory[pc + 4] */
+  XVM_INSTRUCTION_IF_EQU   /* If equals instruction, if value memory[pc + 1] in working register == memoey[pc + 2], then go memory[pc + 3] instructions up */
 };
 
 enum XVM_REGISTER { /* Register numbers */
