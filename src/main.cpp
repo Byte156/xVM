@@ -1,4 +1,3 @@
-#include <iostream>
 #include "lib/libxvm.hpp"
 #include "lib/libxvmboot.hpp"
 

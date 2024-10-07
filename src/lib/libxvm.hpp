@@ -77,14 +77,8 @@ class xVM {
             running = 0;
             break;
           case XVM_INSTRUCTION_SET:
-            write_mem(memory[pc + 1], memory[pc + 2]);
+            write_mem(memory[pc++], memory[pc + 2]);
             pc += 2;
-            break;
-          case XVM_INSTRUCTION_MOVE:
-            /* Register to move in */
-            if (memory[pc++] == memory[XVM_POSITION_MEMORY_WORKINGREG]) {
-              
-            }
             break;
 
           default:
