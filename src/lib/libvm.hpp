@@ -14,8 +14,10 @@ class VM {
     int size_intreg; /* Intenger register size */
     int size_strreg; /*  String/character register size*/
     int pc = 0; /* Program counter */
+
     bool running = 0; /* Running flag */
-    VM(int sm = 128, int si = 32, int ss = 64) {
+
+    VM(int sm = 128, int si = 32, int ss = 64, uint8_t mpd = 64) {
       this->size_mem = sm;
       this->size_intreg = si;
       this->size_strreg = ss;
@@ -36,7 +38,11 @@ class VM {
     }
     void write_mem(int pos, uint8_t data) {
       memory[pos] = data;
-      if (XVM_CFG_VMDEBUG_SHOWWRITELOGS) std::cout << "[VM] Wrote " << unsigned(data) << " to position " << pos << std::endl;
+      if (XVM_CFG_VMDEBUG_SHOWWRITELOGS) std::cout << "[VM][Debug] Wrote " << unsigned(data) << " to position " << pos << " in memory" << std::endl;
+    }
+    void write_intreg(int pos, int data) {
+      intreg[pos] = data;
+      if (XVM_CFG_VMDEBUG_SHOWWRITELOGS) std::cout << "[VM][Debug] Wrote " << unsigned(data) << " to position " << pos << " in intreg" << std::endl;
     }
     void writearr_mem(int pos, const uint8_t data[]) {
       int datai = 0;
@@ -56,6 +62,8 @@ class VM {
       int ins = 0; /* Current instruction */
       int len = 0; /* For LOADSTR */
       int pos; /* For LOADSTR */
+      /* Set up variables */
+      write_intreg(XVM_POSITION_INTREG_WORKINGREG, XVM_REGISTER_MEMORY);
       running = 1;
       while (pc < size_mem && running) {
         if (XVM_CFG_VMDEBUG_SHOWINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << ins << std::endl;
@@ -142,13 +150,23 @@ class VM {
             if (XVM_CFG_VMDEBUG_SHOWCASEINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << "GOTO" << std::endl;
             pc = memory[pc + 1];
             break;
-          case XVM_INSTRUCTION_IF:
-            if (XVM_CFG_VMDEBUG_SHOWCASEINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << "IF" << std::endl;
-            switch (memory[pc + 1]) {
-              default:
-                if (XVM_CFG_VMLOGS_SHOWERRORS) std::cout << "[xVM][Error] Runtime error at position " << pc << ": if: unknown register";
+          case XVM_INSTRUCTION_IF_EQU:
+            if (XVM_CFG_VMDEBUG_SHOWCASEINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << "IF_EQU" << std::endl;
+            switch (memory[XVM_POSITION_INTREG_WORKINGREG]) {
+              case XVM_REGISTER_MEMORY:
+                if (memory[memory[pc + 1]] == memory[pc + 2]) pc += memory[pc + 3];
+                pc += 2;
+                break;
+              case XVM_REGISTER_INTREG:
+                if (intreg[memory[pc + 1]] == memory[pc + 2]) pc += memory[pc + 3];
+                pc += 2;
+                break;
+              case XVM_REGISTER_STRREG:
+                if (strreg[memory[pc + 1]] == memory[pc + 2]) pc += memory[pc + 3];
+                pc += 2;
                 break;
             }
+            break;
           default:
             break;
         }

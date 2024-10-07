@@ -22,5 +22,6 @@ const uint8_t XVM_PROGRAM_BOOT_1[] = {
   getch, 0,
   if_equ, 0, '1', 2,
   halt,
-  print, 0
+  print, 0,
+  halt
 };

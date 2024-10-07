@@ -20,11 +20,12 @@ enum XVM_INSTRUCTION { /* xVM instruction numbers */
   XVM_INSTRUCTION_GOTO,    /* Go to instruction, set program counter to next argument (memory[pc + 1]) */
   XVM_INSTRUCTION_IF_EQU   /* If equals instruction, if value memory[pc + 1] in working register == memoey[pc + 2], then go memory[pc + 3] instructions up */
 };
-
 enum XVM_REGISTER { /* Register numbers */
   XVM_REGISTER_MEMORY, /* Program memory register */
   XVM_REGISTER_INTREG, /* Intenger register */
   XVM_REGISTER_STRREG  /* String/character register */
 };
-
+enum XVM_POSITION_INTREG {
+  XVM_POSITION_INTREG_WORKINGREG = 60 /* Position of current working register value in intreg */
+}
 #endif
