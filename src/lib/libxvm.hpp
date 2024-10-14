@@ -1,100 +1,61 @@
-#ifndef XVM_LIBVM
-#define XVM_LIBVM
-
+#ifndef XVM_LIBXVM
+#define XVM_LIBXVM
 #include <iostream>
-#include <fstream>
+#include <algorithm>
 
-#include "libxvmdata.h"
-#include "libxvmcfg.h"
-#include "libgetch.h"
+#include "libxvmdata.hpp"
+#include "libxvmlog.hpp"
+#include "libxvmcfg.hpp"
 
 class xVM {
+  private:
+    xVM_log log;
   public:
-    int size_mem; /* Memory size */
-    int size_intreg; /* Intenger register size */
-    int size_strreg; /*  String/character register size*/
-    int pc = 0; /* Program counter */
+  size_t size_memory = 0;
+  size_t size_reg_int = 0;
+  size_t size_reg_char = 0;
 
-    bool running = 0; /* Running flag */
+  size_t pc = 0;
 
-    xVM(int sm = 128, int si = 32, int ss = 64, uint8_t mpd = 64) {
-      this->size_mem = sm;
-      this->size_intreg = si;
-      this->size_strreg = ss;
-      /* Redeclare registers with specified size */
-      memory = new uint8_t[sm];
-      intreg = new int[si];
-      strreg = new char[ss];
-      /* Fill the registers with zeros */
-      for (int i = 0; i < sm; ++i) {
-        memory[i] = 0;
-      }
-      for (int i = 0; i < si; ++i) {
-        intreg[i] = 0;
-      }
-      for (int i = 0; i < ss; ++i) {
-        strreg[i] = 0;
-      }
-    }
-    void write_mem(int pos, uint8_t data) {
-      memory[pos] = data;
-      if (XVM_CFG_VMDEBUG_SHOWWRITELOGS) std::cout << "[VM][Debug] Wrote " << unsigned(data) << " to position " << pos << " in memory" << std::endl;
-    }
-    void write_intreg(int pos, int data) {
-      intreg[pos] = data;
-      if (XVM_CFG_VMDEBUG_SHOWWRITELOGS) std::cout << "[VM][Debug] Wrote " << unsigned(data) << " to position " << pos << " in intreg" << std::endl;
-    }
-    void writearr_mem(int pos, const uint8_t data[]) {
-      int datai = 0;
-      for (int i = pos; i < size_mem; i++) {
-        write_mem(i, data[datai]);
-        datai++;
-      }
-    }
-    void debug_printmem() {
-      std::cout << "Memory: " << std::endl;
-      for (int i = 0; i < size_mem; i++) {
-        std::cout << "[" << i << "] " << memory[i] << std::endl;
-      }
-    }
-    void boot() {
-      pc = 0; /* Reset */
-      int ins = 0; /* Current instruction */
-      int len = 0; /* For LOADSTR */
-      int pos; /* For LOADSTR */
-      /* Set up variables */
-      write_intreg(XVM_POSITION_MEMORY_WORKINGREG, XVM_REGISTER_MEMORY);
-      running = 1;
-      while (pc < size_mem && running) {
-        if (XVM_CFG_VMDEBUG_SHOWINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << ins << std::endl;
-        ins = memory[pc];
-        switch (ins) {
-          case XVM_INSTRUCTION_NULL:
-            if (XVM_CFG_VMDEBUG_SHOWCASEINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << "NULL" << std::endl;
-            break;
-          case XVM_INSTRUCTION_HALT:
-            if (XVM_CFG_VMDEBUG_SHOWCASEINSTRUCTION) std::cout << "[xVM][Debug] pc=" << pc << ", ins=" << "HALT" << std::endl;
-            running = 0;
-            break;
-          case XVM_INSTRUCTION_SET:
-            write_mem(memory[pc++], memory[pc + 2]);
-            pc += 2;
-            break;
-
-          default:
-            break;
-        }
-        pc++;
-      }
-    }
-    ~xVM() {
-      /* Free the memory */
-      delete[] memory;
-      delete[] intreg;
-      delete[] strreg;
-    }
-    uint8_t *memory; /* Program memory */
-    int *intreg; /* Intenger register */
-    char *strreg; /* String/character register */
+  bool running = false;
+  
+  xVM(size_t mem_size = 128, size_t int_size = 32, size_t char_size = 32) {
+    /* Set up memory and registers */
+  	memory = new uint8_t[mem_size];
+  	reg_int = new int[int_size];
+  	reg_char = new char[char_size];
+  	/* Set size values of the class */
+  	this->size_memory = mem_size;
+  	this->size_reg_int = int_size;
+  	this->size_reg_char = char_size;
+  	/* Fill all the arrays with null (zeros) */
+  	std::fill(memory, memory + size_memory, 0);
+    std::fill(reg_int, reg_int + size_reg_int, 0);
+  	std::fill(reg_char, reg_char + size_reg_char, 0);
+  	log.log("xVM initialized");
+  }
+  void interprent(uint8_t in) {
+  	switch (in) {
+  	  /* TODO: interprent instructions actually */
+  	}
+  }
+  void run(int startpos = 0) {
+    log.log("Run from " + startpos);
+    while (running && pc < size_memory) {
+  	  interprent(memory[pc]);
+      pc++;
+  	}
+  }
+  ~xVM() {
+    /* Free occupied memory */
+  	delete[] memory;
+  	delete[] reg_int;
+  	delete [] reg_char;
+  	log.log("xVM deinitialized");
+  	if (XVM_CFG_DEBUG_PRINTLOGS) log.list();
+  }
+  uint8_t* memory; /* Main program memory */
+  int* reg_int; /* Intenger registers */
+  char* reg_char; /* Character registers */
 };
 #endif
