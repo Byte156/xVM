@@ -8,12 +8,19 @@ else
   exit 1
 fi
 
+if [[ -f "build.txt" ]]; then
+  build_global=$(cat build.txt)
+else
+  echo "# build.txt not found"
+  exit 1
+fi
 # Split the version into major, minor, and build components
 IFS='.' read -r major minor build <<< "$version"
 
 # Increment the appropriate version component
 if [[ $1 == "build" ]]; then
   build=$((build + 1))
+  build_global=$((build_global + 1))
 elif [[ $1 == "minor" ]]; then
   minor=$((minor + 1))
 elif [[ $1 == "major" ]]; then
@@ -28,5 +35,6 @@ new_version="${major}.${minor}.${build}"
 
 # Write the new version back to version.txt
 echo "$new_version" > version.txt
+echo "$build_global" > build.txt
 
-echo "# New version: $new_version"
+echo "# New version: ${new_version} (build ${build_global})"
