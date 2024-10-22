@@ -10,7 +10,7 @@
 
 class xVM {
 	private:
-    xVM_log log; // System log
+    xVM_log logger; // System log
 
   public:
     size_t size_memory = 0; // Memory size

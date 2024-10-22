@@ -1,23 +1,37 @@
-#ifndef XVM_LIBLOG
-#define XVM_LIBLOG
 #include <iostream>
-#include <vector>
+#include <fstream>
+#include <string>
+#include <ctime>
 
 class xVM_log {
-  private:
-    std::vector<std::string> logs; /* Logs xontainer */
-  public:
-    /* Log something */
-    void log(const std::string txt) {
-      logs.push_back(txt);
+	  public:
+    xVM_log() {
+	      createLogFile();
     }
-    /* Print all logs */
-    void list() {
-      size_t i = 0;
-      for (const std::string txt : logs) {
-      	std::cout << "[" << i << "] " << txt << std::endl;
-      	i++;
+
+    void log(const std::string& message) {
+	      std::ofstream outfile(logFilePath, std::ios_base::app);
+      if (outfile.is_open()) {
+	        outfile << "[" << currentDateTime("%H%M%S") << "] " << message << std::endl;
       }
     }
+
+  private:
+    std::string logFilePath;
+
+    void createLogFile() {
+	      std::string datetime = currentDateTime("%H%M%S");
+      logFilePath = "log/" + datetime + ".log";
+      std::ofstream outfile(logFilePath);
+      if (outfile.is_open()) {
+	        outfile << "[" << datetime << "] Log start" << std::endl;
+      }
+    }
+
+    std::string currentDateTime(const std::string& format = "%Y%m%d%H%M%S") {
+	      std::time_t now = std::time(nullptr);
+      char buf[80];
+      std::strftime(buf, sizeof(buf), format.c_str(), std::localtime(&now));
+      return std::string(buf);
+    }
 };
-#endif

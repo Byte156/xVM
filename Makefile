@@ -16,9 +16,12 @@ lib:
 build:
 	@mkdir -p build
 
+log:
+	@mkdir -p log
+
 build/xvm.o: src/main.cpp
 	@printf "# Compiling main.o..."
-	@g++ -c src/main.cpp -o build/main.o
+	@g++ -c src/main.cpp -o build/xvm.o
 	@printf "done\n"
 
 build/libxvm.o: src/lib/libxvm.cpp
@@ -26,7 +29,7 @@ build/libxvm.o: src/lib/libxvm.cpp
 	@g++ -c src/lib/libxvm.cpp -fPIC -o build/libxvm.o
 	@printf "done\n"
 
-bin/xvm: bin build/xvm.o lib/libxvm.so
+bin/xvm: log bin build/xvm.o lib/libxvm.so
 	@printf "# Linking bin/xvm..."
 	@g++ build/xvm.o -o bin/xvm -Llib -lxvm
 	@printf "done\n"

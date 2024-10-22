@@ -2,16 +2,6 @@
 
 // Constructor
 xVM::xVM(size_t mem_size, size_t int_size, size_t char_size) {
-  std::ifstream infile("config.ini");
-    if (!infile.good()) {
-        std::ofstream outfile("config.ini");
-        outfile << "[Debug]\n";
-        outfile << "printlogs=false\n";
-        outfile.close();
-        log.log("Written config file");
-    } else {
-        log.log("Config file exists");
-    }
 	// Set up memory and registers
   memory = new uint8_t[mem_size];
   reg_int = new int[int_size];
@@ -27,7 +17,7 @@ xVM::xVM(size_t mem_size, size_t int_size, size_t char_size) {
   std::fill(reg_int, reg_int + size_reg_int, 0);
   std::fill(reg_char, reg_char + size_reg_char, 0);
 
-  log.log("xVM initialized");
+  logger.log("xVM initialized");
 }
 
 // Destructor
@@ -37,19 +27,7 @@ xVM::~xVM() {
   delete[] reg_int;
   delete[] reg_char;
 
-  log.log("xVM deinitialized");
-
-  std::ifstream infile("config.ini");
-  std::string line;
-  std::string printlogs = "false";
-  while (std::getline(infile, line)) {
-    if (line.find("printlogs=") != std::string::npos) {
-      printlogs = line.substr(line.find("=") + 1);
-    }
-  }
-  if (printlogs == "true") {
-    log.list();
-  }
+  logger.log("xVM deinitialized");
 }
 
 // Interpreter method
@@ -61,7 +39,7 @@ void xVM::interprent(uint8_t in) {
 
 // Run method
 void xVM::run(int startpos) {
-	  log.log("Run from " + std::to_string(startpos));
+	  logger.log("Boot from memory at position" + std::to_string(startpos));
   pc = startpos;
 
   while (running && pc < size_memory) {
