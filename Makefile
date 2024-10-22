@@ -31,3 +31,6 @@ lib/libxvm.so: lib build/libxvm.o
 	@printf "# Compiling lib/libxvm.so..."
 	@g++ -shared build/libxvm.o -o lib/libxvm.so
 	@printf "done\n"
+
+run: bin/xvm
+	@LD_LIBRARY_PATH=/home/user/xVM/lib ./bin/xvm
