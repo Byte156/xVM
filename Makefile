@@ -38,4 +38,4 @@ lib/libxvm.so: build/libxvm.o
 	@printf "done\n"
 
 run: bin/xvm
-	LD_LIBRARY_PATH=$(HOME)/xVM/lib ./bin/xvm
+	@LD_LIBRARY_PATH=$(HOME)/xVM/lib ./bin/xvm

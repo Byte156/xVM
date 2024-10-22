@@ -2,7 +2,17 @@
 
 // Constructor
 xVM::xVM(size_t mem_size, size_t int_size, size_t char_size) {
-	  // Set up memory and registers
+  std::ifstream infile("config.ini");
+    if (!infile.good()) {
+        std::ofstream outfile("config.ini");
+        outfile << "[Debug]\n";
+        outfile << "printlogs=false\n";
+        outfile.close();
+        log.log("Written config file");
+    } else {
+        log.log("Config file exists");
+    }
+	// Set up memory and registers
   memory = new uint8_t[mem_size];
   reg_int = new int[int_size];
   reg_char = new char[char_size];
@@ -29,7 +39,17 @@ xVM::~xVM() {
 
   log.log("xVM deinitialized");
 
-  if (XVM_CFG_DEBUG_PRINTLOGS) log.list();
+  std::ifstream infile("config.ini");
+  std::string line;
+  std::string printlogs = "false";
+  while (std::getline(infile, line)) {
+    if (line.find("printlogs=") != std::string::npos) {
+      printlogs = line.substr(line.find("=") + 1);
+    }
+  }
+  if (printlogs == "true") {
+    log.list();
+  }
 }
 
 // Interpreter method

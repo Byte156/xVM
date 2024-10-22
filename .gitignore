@@ -39,3 +39,6 @@ bin/
 log/
 ./lib/
 build/
+
+# Configuration
+*.ini
