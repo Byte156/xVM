@@ -7,7 +7,6 @@
 #include <fstream> // For std::ifstream
 #include "libxvmdata.hpp" // For instructions
 #include "libxvmlog.hpp" // For logs
-#include "libxvmcfg.hpp" // For config
 
 class xVM {
 	private:
