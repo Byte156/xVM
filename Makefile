@@ -21,23 +21,23 @@ log:
 
 build/xvm.o: src/main.cpp
 	@printf "# Compiling main.o..."
-	@g++ -c src/main.cpp -o build/xvm.o
+	@g++ -MMD -MP -c src/main.cpp -o build/xvm.o
 	@printf "done\n"
 
-build/libxvm.o: src/lib/libxvm.cpp
+build/libxvm.o: src/lib/libxvm.cpp src/lib/libxvm.hpp
 	@printf "# Compiling libxvm.o..."
-	@g++ -c src/lib/libxvm.cpp -fPIC -o build/libxvm.o
+	@g++ -MMD -MP -c src/lib/libxvm.cpp -fPIC -o build/libxvm.o
 	@printf "done\n"
 
 bin/xvm: log bin build/xvm.o lib/libxvm.so
 	@printf "# Linking bin/xvm..."
-	@g++ build/xvm.o -o bin/xvm -Llib -lxvm
+	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm
 	@printf "done\n"
 	@./util/version.sh $(VERSION_TYPE); \
 
 lib/libxvm.so: build/libxvm.o
 	@printf "# Linking lib/libxvm.so..."
-	@g++ -shared build/libxvm.o -o lib/libxvm.so
+	@g++ -MMD -MP -shared build/libxvm.o -o lib/libxvm.so
 	@printf "done\n"
 
 run: bin/xvm
