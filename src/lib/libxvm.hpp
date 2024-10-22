@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <cstdint>
 #include "libxvmdata.hpp"
 #include "libxvmlog.hpp"
 #include "libxvmcfg.hpp"
