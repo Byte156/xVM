@@ -4,9 +4,6 @@ OBJECTS := $(patsubst src/%.cpp,build/%.o,$(SOURCES))
 
 all: bin/xvm
 
-clean:
-	rm -f ./build/*
-
 bin:
 	@mkdir -p bin
 
@@ -42,8 +39,17 @@ lib/libxvm.so: lib build/libxvm.o
 run: bin/xvm
 	@LD_LIBRARY_PATH=$(HOME)/xVM/lib ./bin/xvm
 
-devbuild: build/xvm.o
+devbuild: build/xvm.o lib/libxvm.so
 	@printf "# Linking bin/xvm..."
 	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm
 	@printf "done\n"
 	@./util/version.sh $(VERSION_TYPE); \
+
+clean:
+	@printf "# Cleaning build files..."
+	@rm build/*
+	@printf "done\n# Cleaning shared objects..."
+	@rm lib/*
+	@printf "done\n# Cleaning binaries..."
+	@rm bin/*
+	@printf "done\n"
