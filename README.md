@@ -1,4 +1,6 @@
 # xVM
+[![Build](https://github.com/noOne128/xVM/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/noOne128/xVM/actions/workflows/c-cpp.yml)
+
 Simple virtual machine
 
 ## Usage
