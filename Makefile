@@ -33,7 +33,6 @@ bin/xvm: log bin build/xvm.o lib/libxvm.so
 	@printf "# Linking bin/xvm..."
 	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm
 	@printf "done\n"
-	@./util/version.sh $(VERSION_TYPE); \
 
 lib/libxvm.so: build/libxvm.o
 	@printf "# Linking lib/libxvm.so..."
@@ -42,3 +41,9 @@ lib/libxvm.so: build/libxvm.o
 
 run: bin/xvm
 	@LD_LIBRARY_PATH=$(HOME)/xVM/lib ./bin/xvm
+
+devbuild: bin/xvm.o
+	@printf "# Linking bin/xvm..."
+	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm
+	@printf "done\n"
+	@./util/version.sh $(VERSION_TYPE); \
