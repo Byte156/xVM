@@ -42,7 +42,7 @@ lib/libxvm.so: build/libxvm.o
 run: bin/xvm
 	@LD_LIBRARY_PATH=$(HOME)/xVM/lib ./bin/xvm
 
-devbuild: bin/xvm.o
+devbuild: build/xvm.o
 	@printf "# Linking bin/xvm..."
 	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm
 	@printf "done\n"
