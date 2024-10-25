@@ -20,11 +20,11 @@ class xVM_log {
     std::string logFilePath;
 
     void createLogFile() {
-	      std::string datetime = currentDateTime("%H%M%S");
+	      std::string datetime = currentDateTime();
       logFilePath = "log/" + datetime + ".log";
       std::ofstream outfile(logFilePath);
       if (outfile.is_open()) {
-	        outfile << "[" << datetime << "] Log start" << std::endl;
+	        outfile << "[" << currentDateTime("%H%M%S") << "] Log start" << std::endl;
       }
     }
 
