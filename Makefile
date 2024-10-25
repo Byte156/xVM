@@ -34,7 +34,7 @@ bin/xvm: build log bin build/xvm.o lib/libxvm.so
 	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm
 	@printf "done\n"
 
-lib/libxvm.so: build/libxvm.o
+lib/libxvm.so: lib build/libxvm.o
 	@printf "# Linking lib/libxvm.so..."
 	@g++ -MMD -MP -shared build/libxvm.o -o lib/libxvm.so
 	@printf "done\n"
