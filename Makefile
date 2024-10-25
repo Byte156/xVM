@@ -1,6 +1,7 @@
 VERSION_TYPE ?= build
 SOURCES := $(wildcard src/**/*.cpp src/lib/**/*.cpp src/**/*.hpp src/lib/**/*.hpp)
 OBJECTS := $(patsubst src/%.cpp,build/%.o,$(SOURCES))
+DEPENDS := $(OBJECTS:.o=.d)
 
 all: bin/xvm
 
@@ -16,22 +17,22 @@ build:
 log:
 	@mkdir -p log
 
-build/xvm.o: build src/main.cpp
-	@printf "# Compiling main.o..."
-	@g++ -MMD -MP -c src/main.cpp -o build/xvm.o
+build/xvm.o: src/main.cpp | build
+	@printf "# Compiling xvm.o..."
+	@g++ -MMD -MP -c $< -o $@
 	@printf "done\n"
 
-build/libxvm.o: build src/lib/libxvm.cpp src/lib/libxvm.hpp
+build/libxvm.o: src/lib/libxvm.cpp src/lib/libxvm.hpp | build
 	@printf "# Compiling libxvm.o..."
 	@g++ -MMD -MP -c src/lib/libxvm.cpp -fPIC -o build/libxvm.o
 	@printf "done\n"
 
-bin/xvm: build log bin build/xvm.o lib/libxvm.so
+bin/xvm: build/xvm.o lib/libxvm.so | log bin
 	@printf "# Linking bin/xvm..."
 	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm
 	@printf "done\n"
 
-lib/libxvm.so: lib build/libxvm.o
+lib/libxvm.so: build/libxvm.o | lib
 	@printf "# Linking lib/libxvm.so..."
 	@g++ -MMD -MP -shared build/libxvm.o -o lib/libxvm.so
 	@printf "done\n"
@@ -39,7 +40,7 @@ lib/libxvm.so: lib build/libxvm.o
 run: bin/xvm
 	@LD_LIBRARY_PATH=$(HOME)/xVM/lib ./bin/xvm
 
-devbuild: build/xvm.o lib/libxvm.so
+devbuild: bin/xvm
 	@printf "# Linking bin/xvm..."
 	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm
 	@printf "done\n"
