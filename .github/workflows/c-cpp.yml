@@ -3,6 +3,12 @@ name: Build
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - '**.cpp'
+      - '**.hpp'
+      - '**.c'
+      - '**.h'
+      - 'Makefile'
   pull_request:
     branches: [ "main" ]
 
