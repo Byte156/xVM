@@ -53,3 +53,8 @@ clean:
 	@printf "done\n# Cleaning binaries..."
 	@rm bin/*
 	@printf "done\n"
+
+clean_logs:
+	@printf "# Cleaning logs..."
+	@rm log/*
+	@printf "done"
