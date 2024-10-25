@@ -58,4 +58,6 @@ clean:
 clean_logs:
 	@printf "# Cleaning logs..."
 	@rm log/*
-	@printf "done"
+	@printf "done\n"
+
+.PHONY: clean clean_logs all run devbuild
