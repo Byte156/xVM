@@ -19,17 +19,17 @@ build:
 log:
 	@mkdir -p log
 
-build/xvm.o: src/main.cpp
+build/xvm.o: build src/main.cpp
 	@printf "# Compiling main.o..."
 	@g++ -MMD -MP -c src/main.cpp -o build/xvm.o
 	@printf "done\n"
 
-build/libxvm.o: src/lib/libxvm.cpp src/lib/libxvm.hpp
+build/libxvm.o: build src/lib/libxvm.cpp src/lib/libxvm.hpp
 	@printf "# Compiling libxvm.o..."
 	@g++ -MMD -MP -c src/lib/libxvm.cpp -fPIC -o build/libxvm.o
 	@printf "done\n"
 
-bin/xvm: log bin build/xvm.o lib/libxvm.so
+bin/xvm: build log bin build/xvm.o lib/libxvm.so
 	@printf "# Linking bin/xvm..."
 	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm
 	@printf "done\n"
