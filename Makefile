@@ -19,27 +19,27 @@ log:
 
 build/xvm.o: src/main.cpp | build
 	@printf "# Compiling xvm.o..."
-	@g++ -MMD -MP -c $< -o $@
+	@g++ -MMD -MP -c $< -o $@ -Wall -Wextra
 	@printf "done\n"
 
 build/libxvm.o: src/lib/libxvm.cpp src/lib/libxvm.hpp | build
 	@printf "# Compiling libxvm.o..."
-	@g++ -MMD -MP -c src/lib/libxvm.cpp -fPIC -o build/libxvm.o
+	@g++ -MMD -MP -c src/lib/libxvm.cpp -fPIC -o build/libxvm.o -Wall -Wextra
 	@printf "done\n"
 
 bin/xvm: build/xvm.o lib/libxvm.so | log bin
 	@printf "# Linking bin/xvm..."
-	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm
+	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm -Wall -Wextra
 	@printf "done\n"
 
 lib/libxvm.so: src/lib/libxvm.cpp build/libxvm.o build/libxvmins.o | lib
 	@printf "# Linking lib/libxvm.so..."
-	@g++ -MMD -MP -shared build/libxvm.o build/libxvmins.o -o lib/libxvm.so
+	@g++ -MMD -MP -shared build/libxvm.o build/libxvmins.o -o lib/libxvm.so -Wall -Wextra
 	@printf "done\n"
 
 build/libxvmins.o: src/lib/libxvmins.cpp | build
 	@printf "# Compiling build/libxvmins.o..."
-	@g++ -MMD -MP -fPIC -c $< -o $@
+	@g++ -MMD -MP -fPIC -c $< -o $@ -Wall -Wextra
 	@printf "done\n"
 
 run: bin/xvm
@@ -47,7 +47,7 @@ run: bin/xvm
 
 devbuild: bin/xvm
 	@printf "# Linking bin/xvm..."
-	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm
+	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm -Wall -Wextra
 	@printf "done\n"
 	@./util/version.sh $(VERSION_TYPE); \
 
