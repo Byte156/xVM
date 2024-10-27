@@ -45,3 +45,7 @@ build/
 
 # Certificates
 *.pem
+
+# Replit files
+.ccls-cache/
+.replit
