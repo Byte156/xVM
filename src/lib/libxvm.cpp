@@ -1,8 +1,7 @@
 #include "libxvm.hpp"
 
-// Constructor
 xVM::xVM(size_t mem_size, size_t int_size, size_t char_size) {
-	// Set up memory and registers
+  // Set up memory and registers
   memory = new uint8_t[mem_size];
   reg_int = new int[int_size];
   reg_char = new char[char_size];
@@ -19,31 +18,42 @@ xVM::xVM(size_t mem_size, size_t int_size, size_t char_size) {
 
   logger.log("xVM initialized");
 }
-
-// Destructor
 xVM::~xVM() {
-	  // Free occupied memory
+  // Free occupied memory
   delete[] memory;
   delete[] reg_int;
   delete[] reg_char;
 
   logger.log("xVM deinitialized");
 }
-
-// Interpreter method
 void xVM::interprent(uint8_t in) {
-	  switch (in) {
-	    // TODO: implement instructions actually
+  if (in < XVM_INSTRUCTIONTABLE_LENGTH) {
+    XVM_INSTRUCTIONTABLE[in](*this);
+  } else {
+    std::stringstream ss;
+    ss << "Invalid instruction: " << reinterpret_cast<char *>(in);
+    logger.log(ss.str());
   }
 }
-
-// Run method
 void xVM::run(int startpos) {
-	  logger.log("Boot from memory at position" + std::to_string(startpos));
+  logger.log("Boot from memory at position " + std::to_string(startpos));
   pc = startpos;
 
   while (running && pc < size_memory) {
-	    interprent(memory[pc]);
+    interprent(memory[pc]);
     pc++;
+  }
+}
+void xVM::load(uint8_t arr[], size_t len, size_t pos) {
+  for (; pos < len; pos++) {
+    memory[pos] = arr[pos];
+    pos++;
+    logger.log("Loaded " + std::to_string(arr[pos]) + " into " +
+               std::to_string(pos));
+  }
+}
+void xVM::dump() {
+  for (size_t i = 0; i < 256; i++) {
+    std::cout << unsigned(memory[i]) << " ";
   }
 }

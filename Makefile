@@ -32,9 +32,14 @@ bin/xvm: build/xvm.o lib/libxvm.so | log bin
 	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm
 	@printf "done\n"
 
-lib/libxvm.so: build/libxvm.o | lib
+lib/libxvm.so: src/lib/libxvm.cpp build/libxvm.o build/libxvmins.o | lib
 	@printf "# Linking lib/libxvm.so..."
-	@g++ -MMD -MP -shared build/libxvm.o -o lib/libxvm.so
+	@g++ -MMD -MP -shared build/libxvm.o build/libxvmins.o -o lib/libxvm.so
+	@printf "done\n"
+
+build/libxvmins.o: src/lib/libxvmins.cpp | build
+	@printf "# Compiling build/libxvmins.o..."
+	@g++ -MMD -MP -fPIC -c $< -o $@
 	@printf "done\n"
 
 run: bin/xvm
