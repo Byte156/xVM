@@ -1,4 +1,4 @@
-#include <sstream>
+#include <string>
 #include "libxvmins.hpp"
 
 // Do nothing
@@ -21,10 +21,7 @@ void XVM_INSTRUCTIONFUNC_HALT(xVM &vm) {
 void XVM_INSTRUCTIONFUNC_SET(xVM &vm) {
   // Write value vm.memory[pc + 2] at position vm.memory[vm.pc + 1]
   vm.memory[vm.memory[vm.pc + 1]] = vm.memory[vm.pc + 2];
-  std::stringstream ss;
-  ss << "SET: set " << reinterpret_cast<char *>(vm.memory[vm.pc + 1]) << " to "
-     << reinterpret_cast<char *>(vm.memory[vm.pc + 2]);
-  vm.logger.log(ss.str());
+  vm.logger.log(std::string("SET: set ").append(std::to_string(vm.memory[vm.pc + 1])).append(" to ").append(std::to_string(vm.memory[vm.pc + 1])));
 }
 
 XVM_INSTRUCTIONFUNC XVM_INSTRUCTIONTABLE[XVM_INSTRUCTIONTABLE_LENGTH] = {
