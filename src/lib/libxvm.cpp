@@ -15,9 +15,11 @@ xVM::xVM(size_t mem_size, size_t int_size, size_t char_size) {
 
   // Fill all the arrays with null (zeros)
   std::fill(memory, memory + size_memory, 0);
+  logger.log(std::string("Mapped ").append(std::to_string(this->size_memory)).append(" bytes of memory"));
   std::fill(reg_int, reg_int + size_reg_int, 0);
+  logger.log(std::string("Mapped ").append(std::to_string(this->size_memory)).append(" bytes of memory (reg_int)"));
   std::fill(reg_char, reg_char + size_reg_char, 0);
-
+  logger.log(std::string("Mapped ").append(std::to_string(this->size_memory)).append(" bytes of memory (reg_char)"));
   logger.log("xVM initialized");
 }
 xVM::~xVM() {
@@ -55,6 +57,7 @@ void xVM::load(uint8_t arr[], size_t len, size_t pos) {
   }
 }
 void xVM::dump() {
+  logger.log("Memory dump to initialized");
   for (size_t i = 0; i < 256; i++) {
     std::cout << unsigned(memory[i]) << " ";
   }
