@@ -1,6 +1,6 @@
 #include "libxvm.hpp"
 #include <iostream>      // For std::cout
-#include <sstream>       // For std::stringstream
+#include <string>       // For std::stringstream
                          //
 xVM::xVM(size_t mem_size, size_t int_size, size_t char_size) {
   // Set up memory and registers
@@ -30,16 +30,16 @@ xVM::~xVM() {
 }
 void xVM::interprent(uint8_t in) {
   if (in < XVM_INSTRUCTIONTABLE_LENGTH) {
+    logger.log(std::string("Running instruction ").append(std::to_string(in)));
     XVM_INSTRUCTIONTABLE[in](*this);
   } else {
-    std::stringstream ss;
-    ss << "Invalid instruction: " << reinterpret_cast<char *>(in);
-    logger.log(ss.str());
+    logger.log(std::string("Illegal instruction ").append(std::to_string(in)));
   }
 }
 void xVM::run(int startpos) {
   logger.log("Boot from memory at position " + std::to_string(startpos));
   pc = startpos;
+  running = 1; 
 
   while (running && pc < size_memory) {
     interprent(memory[pc]);
