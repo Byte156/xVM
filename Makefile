@@ -1,6 +1,7 @@
 SOURCES := $(wildcard src/**/*.cpp src/lib/**/*.cpp src/**/*.hpp src/lib/**/*.hpp)
 OBJECTS := $(patsubst src/%.cpp,build/%.o,$(SOURCES))
 DEPENDS := $(OBJECTS:.o=.d)
+LIB_DIR := $(shell realpath ./lib)
 
 all: bin/xvm
 
@@ -52,10 +53,10 @@ build/libxvmins.o: src/lib/libxvmins.cpp | build
 	@printf "done\n"
 
 run: bin/xvm
-	@LD_LIBRARY_PATH=$(HOME)/xVM/lib ./bin/xvm
+	@LD_LIBRARY_PATH=$(LIB_DIR) ./bin/xvm
 
 test: bin/test1
-	@LD_LIBRARY_PATH=$(HOME)/xVM/lib ./bin/test1
+	@LD_LIBRARY_PATH=$(LIB_DIR) ./bin/test1
 devbuild: bin/xvm
 	@printf "# Linking bin/xvm..."
 	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm -Wall -Wextra
