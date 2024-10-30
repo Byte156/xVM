@@ -1,4 +1,5 @@
 #include <iostream>
+#include "testcfg.hpp"
 #include "lib/libxvm.hpp"
 
 int main() {
@@ -15,7 +16,7 @@ int main() {
   };
   std::cout << "\033[0m\nChecking set instruction...";
   vm.memory[0x00] = XVM_INSTRUCTION_SET; // Instruction
-  vm.memory[0x01] = 0x04; // Place for number (10)
+  vm.memory[0x01] = 0x04; // Place for number
   vm.memory[0x02] = 12; // Number
   vm.memory[0x03] = XVM_INSTRUCTION_HALT; // Exit the program safely
   vm.run(0);
@@ -26,5 +27,6 @@ int main() {
     status = 1;
   }
   std::cout << "\033[0m\n";
+  if (XVM_CFG_TEST_PRINTDUMP) vm.dump();
   return status;
 }
