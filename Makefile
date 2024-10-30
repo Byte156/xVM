@@ -1,4 +1,3 @@
-VERSION_TYPE ?= build
 SOURCES := $(wildcard src/**/*.cpp src/lib/**/*.cpp src/**/*.hpp src/lib/**/*.hpp)
 OBJECTS := $(patsubst src/%.cpp,build/%.o,$(SOURCES))
 DEPENDS := $(OBJECTS:.o=.d)
@@ -16,6 +15,16 @@ build:
 
 log:
 	@mkdir -p log
+
+bin/test1: build/test1.o | bin
+	@printf "# Linking bin/test1..."
+	@g++ build/test1.o -o bin/test1 -Llib -lxvm
+	@printf "done\n"
+
+build/test1.o: src/test1.cpp lib/libxvm.so | build
+	@printf "# Compiling build/test1.o..."
+	@g++ -c src/test1.cpp -o build/test1.o
+	@printf "done\n"
 
 build/xvm.o: src/main.cpp | build
 	@printf "# Compiling xvm.o..."
@@ -45,11 +54,13 @@ build/libxvmins.o: src/lib/libxvmins.cpp | build
 run: bin/xvm
 	@LD_LIBRARY_PATH=$(HOME)/xVM/lib ./bin/xvm
 
+test: bin/test1
+	@LD_LIBRARY_PATH=$(HOME)/xVM/lib ./bin/test1
 devbuild: bin/xvm
 	@printf "# Linking bin/xvm..."
 	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm -Wall -Wextra
 	@printf "done\n"
-	@./util/version.sh $(VERSION_TYPE); \
+	@./util/version.sh
 
 clean:
 	@printf "# Cleaning build files..."
@@ -65,4 +76,4 @@ clean_logs:
 	@rm log/*
 	@printf "done\n"
 
-.PHONY: clean clean_logs all run devbuild
+.PHONY: clean clean_logs all run devbuild test
