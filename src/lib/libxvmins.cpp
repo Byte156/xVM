@@ -1,3 +1,4 @@
+#include <sstream>
 #include "libxvmins.hpp"
 
 // Do nothing
@@ -15,6 +16,7 @@ void XVM_INSTRUCTIONFUNC_RESET(xVM &vm) {
 void XVM_INSTRUCTIONFUNC_HALT(xVM &vm) {
   // Stop the VM if its running
   if (vm.running == 1) vm.running = 0;
+  vm.logger.log("HALT: execution halted");
 }
 void XVM_INSTRUCTIONFUNC_SET(xVM &vm) {
   // Write value vm.memory[pc + 2] at position vm.memory[vm.pc + 1]
