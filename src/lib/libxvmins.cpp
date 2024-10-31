@@ -20,7 +20,11 @@ void XVM_INSTRUCTIONFUNC_SET(xVM &vm) {
   // Log: SET: set arg1 to arg2
   vm.logger.log(std::string("SET: set ").append(std::to_string(vm.memory[vm.pc + 1])).append(" to ").append(std::to_string(vm.memory[vm.pc + 2])));
 }
-
+void XVM_INSTRUCTIONFUNC_JMP(xVM &vm) {
+  // Set program counter to arg1
+  vm.pc = vm.memory[vm.pc + 1];
+  vm.pc++;
+}
 XVM_INSTRUCTIONFUNC XVM_INSTRUCTIONTABLE[XVM_INSTRUCTIONTABLE_LENGTH] = {
   XVM_INSTRUCTIONFUNC_NULL,
   XVM_INSTRUCTIONFUNC_RESET,

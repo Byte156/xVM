@@ -10,6 +10,7 @@ enum XVM_INSTRUCTION {
   XVM_INSTRUCTION_RESET,      // Reset the VM to its default state
   XVM_INSTRUCTION_HALT,       // Stop execution of instructions
   XVM_INSTRUCTION_SET,        // Write a intermidate value into memory
+  XVM_INSTRUCTION_JMP,        // Set the program counter, useful for creating loops
   XVM_INSTRUCTIONTABLE_LENGTH // Instruction table length, not an instruction
 };
 // Register list
@@ -23,6 +24,7 @@ void XVM_INSTRUCTIONFUNC_NULL(xVM &vm);
 void XVM_INSTRUCTIONFUNC_RESET(xVM &vm);
 void XVM_INSTRUCTIONFUNC_HALT(xVM &vm);
 void XVM_INSTRUCTIONFUNC_SET(xVM &vm);
+void XVM_INSTRUCTIONFUNC_JMP(xVM &vm);
 
 // xVM instruction data type
 typedef void (*XVM_INSTRUCTIONFUNC)(xVM &);
