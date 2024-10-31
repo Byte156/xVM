@@ -88,6 +88,7 @@ int main() {
   } else {
     std::cout << "\033[91mhalt check error";
   }
+  std::cout << "\033[0m\n";
   if (XVM_CFG_TEST_PRINTDUMP && status != 0) vm.dump();
   return status;
 }
