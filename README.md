@@ -1,5 +1,6 @@
 # xVM
-[![Build](https://github.com/noOne128/xVM/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/noOne128/xVM/actions/workflows/c-cpp.yml)
+[![Tests](https://github.com/noOne128/xVM/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/noOne128/xVM/actions/workflows/test.yml)
+[![Wakatime](https://wakatime.com/badge/user/4e59b578-f9c8-4e4b-ac2e-4eac9482e85e/project/f2f1e487-ff97-4ddd-ad77-8e6aab1a53a6.svg)](https://wakatime.com/badge/user/4e59b578-f9c8-4e4b-ac2e-4eac9482e85e/project/f2f1e487-ff97-4ddd-ad77-8e6aab1a53a6)
 
 Simple virtual machine
 
