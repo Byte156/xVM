@@ -15,12 +15,12 @@ xVM::xVM(size_t mem_size, size_t int_size, size_t char_size) {
 
   // Fill all the arrays with null (zeros)
   std::fill(memory, memory + size_memory, 0);
-  logger.log(std::string("Mapped ").append(std::to_string(this->size_memory)).append(" bytes of memory"));
+  logger.log(std::string("Mapped ").append(std::to_string(this->size_memory)).append(" bytes of memory"), pc);
   std::fill(reg_int, reg_int + size_reg_int, 0);
-  logger.log(std::string("Mapped ").append(std::to_string(this->size_memory)).append(" bytes of memory (reg_int)"));
+  logger.log(std::string("Mapped ").append(std::to_string(this->size_memory)).append(" bytes of memory (reg_int)"), pc);
   std::fill(reg_char, reg_char + size_reg_char, 0);
-  logger.log(std::string("Mapped ").append(std::to_string(this->size_memory)).append(" bytes of memory (reg_char)"));
-  logger.log("xVM initialized");
+  logger.log(std::string("Mapped ").append(std::to_string(this->size_memory)).append(" bytes of memory (reg_char)"), pc);
+  logger.log("xVM initialized", pc);
 }
 xVM::~xVM() {
   // Free occupied memory
@@ -28,18 +28,18 @@ xVM::~xVM() {
   delete[] reg_int;
   delete[] reg_char;
 
-  logger.log("xVM deinitialized");
+  logger.log("xVM deinitialized", pc);
 }
 void xVM::interprent(uint8_t in) {
   if (in < XVM_INSTRUCTIONTABLE_LENGTH) {
-    logger.log(std::string("Running instruction ").append(std::to_string(in)));
+    logger.log(std::string("Ins: ").append(std::to_string(in)), pc);
     XVM_INSTRUCTIONTABLE[in](*this);
   } else {
-    logger.log(std::string("Illegal instruction ").append(std::to_string(in)));
+    logger.log(std::string("Illegal instruction ").append(std::to_string(in)), pc);
   }
 }
 void xVM::run(int startpos) {
-  logger.log("Boot from memory at position " + std::to_string(startpos));
+  logger.log("Boot from memory at position " + std::to_string(startpos), pc);
   pc = startpos;
   running = 1; 
 
@@ -53,11 +53,11 @@ void xVM::load(uint8_t arr[], size_t len, size_t pos) {
     memory[pos] = arr[pos];
     pos++;
     logger.log("Loaded " + std::to_string(arr[pos]) + " into " +
-               std::to_string(pos));
+               std::to_string(pos), pc);
   }
 }
 void xVM::dump() {
-  logger.log("Memory dump to initialized");
+  logger.log("Memory dump to initialized", pc);
   for (size_t i = 0; i < 256; i++) {
     std::cout << unsigned(memory[i]) << " ";
   }
