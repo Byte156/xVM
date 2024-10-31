@@ -3,15 +3,17 @@
 
 void XVM_INSTRUCTIONFUNC_NULL(xVM &vm) { vm.logger.log("NULL trigerred", vm.pc); }
 void XVM_INSTRUCTIONFUNC_RESET(xVM &vm) {
+  // Immediatly reset the VM
+  // Set program counter to zero
+  vm.logger.log("RESET triggered", vm.pc);
+  vm.pc = 0;
   // Run the VM if its not running
   if (vm.running == 0)
     vm.running = 1;
-  // Set program counter to 0
-  vm.pc = 0;
 }
 void XVM_INSTRUCTIONFUNC_HALT(xVM &vm) {
-  // Stop the VM if its running
-  if (vm.running == 1) vm.running = 0;
+  // Stop the VM
+  vm.running = 0;
   vm.logger.log("HALT: execution halted", vm.pc);
 }
 void XVM_INSTRUCTIONFUNC_SET(xVM &vm) {
