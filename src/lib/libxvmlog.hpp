@@ -9,10 +9,10 @@ class xVM_log {
 	      createLogFile();
     }
 
-    void log(const std::string& message) {
+    void log(const std::string& message, int id) {
 	      std::ofstream outfile(logFilePath, std::ios_base::app);
       if (outfile.is_open()) {
-	        outfile << "[" << currentDateTime("%H%M%S") << "] " << message << std::endl;
+	        outfile << "[" << currentDateTime("%H%M%S") << "] " << "[" << id << "]" << message << std::endl;
       }
     }
 
