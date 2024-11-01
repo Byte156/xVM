@@ -79,7 +79,7 @@ int main() {
     vm.memory[0x00] = XVM_INSTRUCTION_HALT;
     vm.memory[0x01] = XVM_INSTRUCTION_HALT;
     vm.run(0x0D);
-    if (vm.pc == 2) {
+    if (vm.pc == 0) {
       std::cout << "\033[92mok";
     } else {
       std::cout << "\033[91merror";

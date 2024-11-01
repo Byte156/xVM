@@ -45,7 +45,7 @@ void xVM::run(int startpos) {
 
   while (running && pc < size_memory) {
     interprent(memory[pc]);
-    pc++;
+    if (memory[pc] != XVM_INSTRUCTION_RESET && memory[pc] != XVM_INSTRUCTION_HALT) pc++;
   }
 }
 void xVM::load(uint8_t arr[], size_t len, size_t pos) {
