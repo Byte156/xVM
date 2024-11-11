@@ -1,5 +1,6 @@
 #include "libxvm.hpp"
 #include <iostream>      // For std::cout
+#include <fstream>
 #include <string>       // For std::stringstream
                          //
 xVM::xVM(size_t mem_size, size_t int_size, size_t char_size) {
@@ -61,4 +62,18 @@ void xVM::dump() {
   for (size_t i = 0; i < 256; i++) {
     std::cout << unsigned(memory[i]) << " ";
   }
+}
+void xVM::read(std::string path, uint8_t pos) {
+  std::ifstream file(path, std::ios::binary);
+  if (!file.is_open()) {
+    logger.log(std::string("read: Couldn't open ").append(path), pc);
+    return;
+  }
+  char ch;
+  while (file.get(ch)) {
+    uint8_t byte = static_cast<uint8_t>(ch);
+    memory[pos] = byte;
+    pos++;
+  }
+  logger.log(std::string("read: Wrote ").append(path).append(" to memory"), pc);
 }

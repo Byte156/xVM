@@ -25,6 +25,7 @@ public:
   void dump();                 // Dump the memory
   void load(uint8_t app[], size_t len,
             size_t pos = 0); // Load a program into memory
+  void read(std::string path, uint8_t pos);
 
   // Memory and registers
   uint8_t *memory; // Main memory for programs

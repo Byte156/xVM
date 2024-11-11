@@ -2,7 +2,7 @@ name: Test
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dev" ]
     paths:
       - '**.cpp'
       - '**.hpp'
@@ -11,7 +11,7 @@ on:
       - 'Makefile'
       - '**.yml'
   pull_request:
-    branches: [ "main" ]
+    branches: [ "dev" ]
 
 jobs:
   build:

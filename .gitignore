@@ -49,3 +49,6 @@ build/
 # Replit files
 .ccls-cache/
 .replit
+
+# xVM ROM file
+*.xvm
