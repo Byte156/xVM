@@ -3,7 +3,7 @@ OBJECTS := $(patsubst src/%.cpp,build/%.o,$(SOURCES))
 DEPENDS := $(OBJECTS:.o=.d)
 LIB_DIR := $(shell realpath ./lib)
 
-all: bin/xvm
+all: bin/xvm bin/test1
 
 bin:
 	@mkdir -p bin
@@ -17,9 +17,9 @@ build:
 log:
 	@mkdir -p log
 
-bin/test1: build/test1.o | bin
+bin/test1: build/test1.o lib/libxossc.so | bin
 	@printf "# Linking bin/test1..."
-	@g++ build/test1.o -o bin/test1 -Llib -lxvm
+	@g++ build/test1.o -o bin/test1 -Llib -lxvm -lxossc
 	@printf "done\n"
 
 build/test1.o: src/test1.cpp lib/libxvm.so | build
@@ -37,9 +37,19 @@ build/libxvm.o: src/lib/libxvm.cpp src/lib/libxvm.hpp | build
 	@g++ -MMD -MP -c src/lib/libxvm.cpp -fPIC -o build/libxvm.o -Wall -Wextra
 	@printf "done\n"
 
+build/libxossc.o: src/xos/lib/libxossc.cpp | build
+	@printf "# Compiling build/libxossc.o..."
+	@g++ -MMD -MP -c -fPIC src/xos/lib/libxossc.cpp -o build/libxossc.o
+	@printf "done\n"
+
 bin/xvm: build/xvm.o lib/libxvm.so | log bin
 	@printf "# Linking bin/xvm..."
 	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm -Wall -Wextra
+	@printf "done\n"
+
+lib/libxossc.so: build/libxossc.o | lib
+	@printf "# Linking lib/libxossc.so..."
+	@g++ -MMD -MP -shared build/libxossc.o -o lib/libxossc.so -Wall -Wextra
 	@printf "done\n"
 
 lib/libxvm.so: src/lib/libxvm.cpp build/libxvm.o build/libxvmins.o | lib

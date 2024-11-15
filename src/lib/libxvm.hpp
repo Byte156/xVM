@@ -29,6 +29,9 @@ public:
 
   // Memory and registers
   uint8_t *memory; // Main memory for programs
-  int *reg_int;    // Intenger registers
-  char *reg_char;  // Character registers
+  uint8_t gpr0;    // General purpose register 0
+  uint8_t gpr1;    // General purpose register 1
+  uint8_t gpr2;    // General purpose register 2
+  uint8_t gpr3;    // General purpose register 3
+  char *reg_char;  // Character registersc
 };
