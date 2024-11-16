@@ -2,7 +2,8 @@
 #include <iostream>      // For std::cout
 #include <fstream>
 #include <string>       // For std::stringstream
-                         //
+#include "../xos/lib/libxossc.hpp"
+
 xVM::xVM(size_t mem_size, size_t int_size, size_t char_size) {
   // Set up memory and registers
   memory = new uint8_t[mem_size];

@@ -47,14 +47,10 @@ bin/xvm: build/xvm.o lib/libxvm.so | log bin
 	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm -Wall -Wextra
 	@printf "done\n"
 
-lib/libxossc.so: build/libxossc.o | lib
-	@printf "# Linking lib/libxossc.so..."
-	@g++ -MMD -MP -shared build/libxossc.o -o lib/libxossc.so -Wall -Wextra
-	@printf "done\n"
 
-lib/libxvm.so: src/lib/libxvm.cpp build/libxvm.o build/libxvmins.o | lib
+lib/libxvm.so: src/lib/libxvm.cpp build/libxvm.o build/libxvmins.o build/libxossc.o | lib
 	@printf "# Linking lib/libxvm.so..."
-	@g++ -MMD -MP -shared build/libxvm.o build/libxvmins.o -o lib/libxvm.so -Wall -Wextra
+	@LD_LIBRARY_PATH=$LD_LIBRARY_PATH":/root/xVM/lib" g++ -MMD -MP -shared build/libxvm.o build/libxvmins.o build/libxossc.o -o lib/libxvm.so -Wall -Wextra
 	@printf "done\n"
 
 build/libxvmins.o: src/lib/libxvmins.cpp | build
@@ -63,10 +59,11 @@ build/libxvmins.o: src/lib/libxvmins.cpp | build
 	@printf "done\n"
 
 run: bin/xvm
-	@LD_LIBRARY_PATH=$(LIB_DIR) ./bin/xvm
+	@LD_LIBRARY_PATH=$(LIB_DIR) ./bin/xvm $(FILE)
 
 test: bin/test1
 	@LD_LIBRARY_PATH=$(LIB_DIR) ./bin/test1
+
 devbuild: bin/xvm
 	@printf "# Linking bin/xvm..."
 	@g++ -MMD -MP build/xvm.o -o bin/xvm -Llib -lxvm -Wall -Wextra
