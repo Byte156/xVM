@@ -33,5 +33,6 @@ public:
   uint8_t gpr1;    // General purpose register 1
   uint8_t gpr2;    // General purpose register 2
   uint8_t gpr3;    // General purpose register 3
+  uint8_t a;       // Accumulator register
   char *reg_char;  // Character registersc
 };
