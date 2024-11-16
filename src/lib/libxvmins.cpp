@@ -1,5 +1,6 @@
 #include <string>
 #include "libxvmins.hpp"
+#include "../xos/lib/libxossc.hpp"
 
 void XVM_INSTRUCTIONFUNC_NULL(xVM &vm) { vm.logger.log("NULL trigerred", vm.pc); }
 void XVM_INSTRUCTIONFUNC_RESET(xVM &vm) {
@@ -28,10 +29,14 @@ void XVM_INSTRUCTIONFUNC_JMP(xVM &vm) {
   vm.logger.log(std::string("Jump to ").append(std::to_string(vm.memory[vm.pc + 1])), vm.pc);
   vm.pc = vm.memory[vm.pc + 1];
 }
+void XVM_INSTRUCTIONFUNC_RSC(xVM &vm) {
+  XOS_SYSCALLTABLE[vm.memory[vm.pc + 1]](vm);
+}
 XVM_INSTRUCTIONFUNC XVM_INSTRUCTIONTABLE[XVM_INSTRUCTIONTABLE_LENGTH] = {
   XVM_INSTRUCTIONFUNC_NULL,
   XVM_INSTRUCTIONFUNC_RESET,
   XVM_INSTRUCTIONFUNC_HALT,
   XVM_INSTRUCTIONFUNC_SET,
-  XVM_INSTRUCTIONFUNC_JMP
+  XVM_INSTRUCTIONFUNC_JMP,
+  XVM_INSTRUCTIONFUNC_RSC
 }; 
