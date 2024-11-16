@@ -17,9 +17,9 @@ build:
 log:
 	@mkdir -p log
 
-bin/test1: build/test1.o lib/libxossc.so lib/libxvm.so | bin
+bin/test1: build/test1.o lib/libxvm.so | bin
 	@printf "# Linking bin/test1..."
-	@g++ build/test1.o -o bin/test1 -Llib -lxvm -lxossc
+	@g++ build/test1.o -o bin/test1 -Llib -lxvm
 	@printf "done\n"
 
 build/test1.o: src/test1.cpp | build
