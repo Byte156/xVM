@@ -2,7 +2,7 @@ SOURCES := $(wildcard src/**/*.cpp src/lib/**/*.cpp src/**/*.hpp src/lib/**/*.hp
 OBJECTS := $(patsubst src/%.cpp,build/%.o,$(SOURCES))
 DEPENDS := $(OBJECTS:.o=.d)
 LIB_DIR := $(shell realpath ./lib)
-RUN_FILE ?= "main.xvm"
+RUN_ARGS ?= "main.xvm"
 
 all: bin/xvm bin/test1
 
@@ -60,7 +60,7 @@ build/libxvmins.o: src/lib/libxvmins.cpp | build
 	@printf "done\n"
 
 run: bin/xvm
-	@LD_LIBRARY_PATH=$(LIB_DIR) ./bin/xvm $(RUN_FILE)
+	@LD_LIBRARY_PATH=$(LIB_DIR) ./bin/xvm $(RUN_ARGS)
 
 test: bin/test1
 	@LD_LIBRARY_PATH=$(LIB_DIR) ./bin/test1
