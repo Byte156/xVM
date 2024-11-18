@@ -2,6 +2,7 @@
 #include <iostream>      // For std::cout
 #include <fstream> 
 #include <algorithm>    // For std::fill
+#include <cstring>
 #include <string>       // For std::stringstream
 #include "../xos/lib/libxossc.hpp"
 
@@ -13,7 +14,7 @@ xVM::xVM(size_t mem_size) {
   this->size_memory = mem_size;
 
 
-  std::fill(memory, memory + size_memory, 0);
+  std::memset(memory, 0, this->size_memory);
   logger.log(std::string("Mapped ").append(std::to_string(this->size_memory)).append(" bytes of memory"), pc);
   logger.log("xVM initialized", pc);
 }

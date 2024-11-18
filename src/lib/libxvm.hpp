@@ -11,7 +11,7 @@ public:
   bool running = false;     // Running flag
 
   // xVM constructor
-  xVM(size_t mem_size = 128, size_t int_size = 32, size_t char_size = 32);
+  xVM(size_t mem_size = 128);
 
   // xVM destructor
   ~xVM();
