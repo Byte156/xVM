@@ -8,18 +8,13 @@
 xVM::xVM(size_t mem_size, size_t int_size, size_t char_size) {
   // Set up memory and registers
   memory = new uint8_t[mem_size];
-  reg_char = new char[char_size];
 
   // Set size values of the class
   this->size_memory = mem_size;
-  this->size_reg_int = int_size;
-  this->size_reg_char = char_size;
 
-  // Fill all the arrays with null (zeros)
+
   std::fill(memory, memory + size_memory, 0);
   logger.log(std::string("Mapped ").append(std::to_string(this->size_memory)).append(" bytes of memory"), pc);
-  std::fill(reg_char, reg_char + size_reg_char, 0);
-  logger.log(std::string("Mapped ").append(std::to_string(this->size_memory)).append(" bytes of memory (reg_char)"), pc);
   logger.log("xVM initialized", pc);
 }
 xVM::~xVM() {

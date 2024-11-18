@@ -7,8 +7,6 @@ class xVM {
 public:
   xVM_log logger;           // System log
   size_t size_memory = 0;   // Memory size
-  size_t size_reg_int = 0;  // Intenger registers counts
-  size_t size_reg_char = 0; // Character registers count
   size_t pc = 0;            // Program counter
   bool running = false;     // Running flag
 
@@ -33,5 +31,4 @@ public:
   uint8_t gpr2;    // General purpose register 2
   uint8_t gpr3;    // General purpose register 3
   uint8_t a;       // Accumulator register
-  char *reg_char;  // Character registersc
 };
