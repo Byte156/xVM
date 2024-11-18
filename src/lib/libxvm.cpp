@@ -1,6 +1,7 @@
 #include "libxvm.hpp"
 #include <iostream>      // For std::cout
-#include <fstream>
+#include <fstream> 
+#include <algorithm>    // For std::fill
 #include <string>       // For std::stringstream
 #include "../xos/lib/libxossc.hpp"
 

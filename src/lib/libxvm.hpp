@@ -1,7 +1,6 @@
 #pragma once
 #include "libxvmins.hpp" // For instructions
 #include "libxvmlog.hpp" // For logs
-#include <algorithm>     // For std::fill
 #include <cstdint>       // For uint8_t
 
 class xVM {
