@@ -52,7 +52,7 @@ void xVM::load(uint8_t arr[], size_t len, size_t pos) {
 }
 void xVM::dump() {
   logger.log("Memory dump to initialized", pc);
-  for (size_t i = 0; i < 256; i++) {
+  for (size_t i = 0; i < size_memory; i++) {
     std::cout << unsigned(memory[i]) << " ";
   }
 }
