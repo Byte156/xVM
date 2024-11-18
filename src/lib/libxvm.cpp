@@ -5,7 +5,7 @@
 #include <string>       // For std::stringstream
 #include "../xos/lib/libxossc.hpp"
 
-xVM::xVM(size_t mem_size, size_t int_size, size_t char_size) {
+xVM::xVM(size_t mem_size) {
   // Set up memory and registers
   memory = new uint8_t[mem_size];
 
@@ -20,7 +20,6 @@ xVM::xVM(size_t mem_size, size_t int_size, size_t char_size) {
 xVM::~xVM() {
   // Free occupied memory
   delete[] memory;
-  delete[] reg_char;
 
   logger.log("xVM deinitialized", pc);
 }
