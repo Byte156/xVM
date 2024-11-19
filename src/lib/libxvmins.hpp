@@ -12,13 +12,20 @@ enum XVM_INSTRUCTION {
   XVM_INSTRUCTION_SET,        // Write a intermidate value into memory
   XVM_INSTRUCTION_JMP,        // Set the program counter, useful for creating loops
   XVM_INSTRUCTION_RSC,        // Run a syscall
+  XVM_INSTRUCTION_STORE,      // Move a value from memory to a register
   XVM_INSTRUCTIONTABLE_LENGTH // Instruction table length, not an instruction
 };
-// Register list
+// Register list (see src/lib/libxvm.hpp line 27 for register comments)
 enum XVM_REGISTER {
-  XVM_REGISTER_MEMORY, // Main memory        (uint8_t)
-  XVM_REGISTER_NUM,    // Number register    (uint8_t)
-  XVM_REGISTER_CHAR    // Character register (char)
+  XVM_REGISTER_MEMORY,
+  XVM_REGISTER_GPR0,
+  XVM_REGISTER_GPR1,
+  XVM_REGISTER_GPR2,
+  XVM_REGISTER_GPR3,
+  XVM_REGISTER_AR0,
+  XVM_REGISTER_AR1,
+  XVM_REGISTER_AR2,
+  XVM_REGISTER_A
 };
 // Special adresses
 enum XVM_ADRESS {
