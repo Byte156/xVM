@@ -30,5 +30,8 @@ public:
   uint8_t gpr1;    // General purpose register 1
   uint8_t gpr2;    // General purpose register 2
   uint8_t gpr3;    // General purpose register 3
+  uint8_t ar0;     // Argument register 0
+  uint8_t ar1;     // Argument register 1
+  uint8_t ar2;     // Argument register 2
   uint8_t a;       // Accumulator register
 };
