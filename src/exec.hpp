@@ -29,7 +29,7 @@ inline void xVM_exec(xVM* vm) {
       else if (vm -> a0 == xVM_REGISTER_GPR1) vm -> gpr1 = vm -> a1;
       else if (vm -> a0 == xVM_REGISTER_GPR2) vm -> gpr2 = vm -> a1;
       else if (vm -> a0 == xVM_REGISTER_GPR3) vm -> gpr3 = vm -> a1;
-      log_debug("Loaded 0x" + to_hex(vm -> a1) + " into register 0x" + to_hex(vm -> a0), vm -> debug);
+      log_debug("Loaded 0x" + to_hex(vm -> a1) + " into register 0x" + to_hex(vm -> a0) + "\n", vm -> debug);
       vm -> pc += 2;
       break;
     case xVM_INSTRUCTION_GOTO:
