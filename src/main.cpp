@@ -6,6 +6,7 @@
 #include "exec.hpp"
 #include "util/check_arr.hpp"
 #include "util/logs.hpp"
+#include "dshell.hpp"
 
 xVM::xVM() {
   // Map the memory
@@ -26,36 +27,18 @@ void xVM::run(uint8_t startpos) {
     xVM_exec(this);
     if (!debug)pc++;
     if (debug) {
-      std::string c;
-      std::cout << "Enter command: ";
-      std::cin >> c;
-      if (c == "s" || c == "stop") running = 0;
-      else if (c == "r"  || c == "reset" || c == "restart") pc = 0;
-      else if (c == "c"  || c == "continue")                pc++;
-      else if (c == "gt" || c == "go_to") {
-        std::cout << "Enter adress:";
-        std::cin >> pc;
-      }
-      else if (c == "dr" || c == "rd" || c == "regdata" || c == "register_data" || c == "data_registers") {
-        std::cout << "AR0: 0x" << to_hex(ar0) << std::endl;
-        std::cout << "AR1: 0x" << to_hex(ar1) << std::endl;
-        std::cout << "AR2: 0x" << to_hex(ar2) << std::endl;
-        std::cout << "GPR0: 0x" << to_hex(gpr0) << std::endl;
-        std::cout << "GPR1: 0x" << to_hex(gpr1) << std::endl;
-        std::cout << "GPR2: 0x" << to_hex(gpr2) << std::endl;
-        std::cout << "GPR3: 0x" << to_hex(gpr3) << std::endl;
-      } 
+       xVM_dsh_runcmd(this);
     }
   }
   log_debug("VM stopped with pc=0x" + to_hex(pc) + "\n", debug);
-  /* This snippet is not working for some reason, it worked fine in v.0.02.0 Alpha
+  // This snippet is not working for some reason, it worked fine in v.0.02.0 Alpha
   // Dump the memory to the console
   log_debug("Memory dump:", debug);
   if (debug) {
     for (size_t i = 0; i < size_memory; i++) {
       std::cout << unsigned(memory[i]) << " ";
     }
-  }*/
+  }
 }
 
 int main(int argc, char* argv[]) {

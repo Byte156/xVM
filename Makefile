@@ -19,7 +19,7 @@ $(TARGET): $(OBJS)
 	@$(CXX) $(CXX_FLAGS) $^ -o $(TARGET)
 	@printf "done\n"
 
-$(OBJS): $(SRCS) $(HEADERS)
+build/%.o: src/%.cpp
 	@printf "# Compiling $<..."
 	@$(CXX) $(CXX_FLAGS) -c $< -o $@
 	@printf "done\n"
