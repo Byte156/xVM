@@ -20,8 +20,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Make test
-      run: make bin/test1
 
-    - name: Run test
+    - name: Test
       run: make test
