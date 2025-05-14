@@ -9,10 +9,10 @@ TARGET = bin/xvm
 all: $(DIRS) $(TARGET)
 
 bin:
-	@mkdir bin
+	@mkdir -v bin
 
 build:
-	@mkdir build
+	@mkdir -v build
 
 $(TARGET): $(OBJS)
 	@printf "# Linking $@..."

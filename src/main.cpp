@@ -2,11 +2,11 @@
 #include <fstream>
 #include <string>
 #include "main.hpp"
-#include "instructions.hpp"
 #include "exec.hpp"
 #include "util/check_arr.hpp"
 #include "util/logs.hpp"
 #include "dshell.hpp"
+#include "memdump.hpp"
 
 xVM::xVM() {
   // Map the memory
@@ -31,13 +31,10 @@ void xVM::run(uint8_t startpos) {
     }
   }
   log_debug("VM stopped with pc=0x" + to_hex(pc) + "\n", debug);
-  // This snippet is not working for some reason, it worked fine in v.0.02.0 Alpha
   // Dump the memory to the console
-  log_debug("Memory dump:", debug);
+  log_debug("Memory dump:\n", debug);
   if (debug) {
-    for (size_t i = 0; i < size_memory; i++) {
-      std::cout << unsigned(memory[i]) << " ";
-    }
+    xVM_memdump(this);
   }
 }
 
