@@ -52,3 +52,6 @@ build/
 
 # xVM ROM file
 *.xvm
+
+# Version Header
+src/version.hpp
