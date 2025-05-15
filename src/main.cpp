@@ -7,6 +7,7 @@
 #include "util/logs.hpp"
 #include "dshell.hpp"
 #include "memdump.hpp"
+#include "version.hpp"
 
 xVM::xVM() {
   // Map the memory
@@ -39,7 +40,7 @@ void xVM::run(uint8_t startpos) {
 }
 
 int main(int argc, char* argv[]) {
-  std::cout << "xVM v.1.0.0 Alpha" << std::endl;
+  std::cout << "xVM " << xVM_VERSION << "/" << xVM_VERSION_ID << std::endl;
 
   // Check if file exists
   if (argc < 2) {
